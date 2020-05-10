@@ -58,6 +58,14 @@ set to 20 with a handful of 3-SAT instances, and instances with more than 100
 variables start to take a noticable amount of time for the solver to find a
 solution.
 
+This solver is also very allocation-heavy, as the current search state has
+to be copied each time an assumption is made so that it can backtrack to an
+earlier state if the assumption doesn't lead to a solution, so there may be
+noticable differences in performance between systems using different memory
+allocators. In particular, allocators which internally perform a lot of locking
+are likely to suffer from lock contention issues due to multiple threads
+executing in the allocator at the same time.
+
 ### License
 
 Licensed under the ISC license; Copyright (c) 2020 Molly Miller. See the
